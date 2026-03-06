@@ -17,7 +17,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     msg = await update.message.reply_text("Descargando video... ⏳")
     
-    # Configuración básica de yt-dlp
+    # Configuración de yt-dlp
+    # Puedes ajustar 'format' a 'bestvideo+bestaudio/best' para máxima calidad
     ydl_opts = {
         'format': 'best',
         'outtmpl': 'video.mp4',

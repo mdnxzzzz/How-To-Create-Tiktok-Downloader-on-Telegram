@@ -39,6 +39,42 @@ pip install -r requirements.txt
 python main.py
 ```
 
+## Ejemplos de uso de yt-dlp
+
+La potencia de este bot reside en cómo configuramos `yt-dlp`. Aquí tienes algunos ejemplos de configuraciones comunes:
+
+### Configuración básica (la usada en el bot)
+```python
+ydl_opts = {
+    'format': 'best',           # Descarga la mejor calidad disponible
+    'outtmpl': 'video.mp4',     # Nombre del archivo de salida
+    'quiet': True,              # No muestra logs innecesarios
+}
+```
+
+### Descargar solo el audio (MP3)
+Si quisieras transformar el bot en un descargador de música:
+```python
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    'outtmpl': 'audio.mp3',
+}
+```
+
+### Extraer información sin descargar
+Útil para mostrar el título o la duración antes de enviar el video:
+```python
+with yt_dlp.YoutubeDL({}) as ydl:
+    info = ydl.extract_info(url, download=False)
+    titulo = info.get('title', 'Sin título')
+    duracion = info.get('duration', 0)
+```
+
 ## Consideraciones importantes
 
 - **Marcas de agua**: Por defecto, la descarga incluye los metadatos y el formato que la plataforma entrega. Para versiones más avanzadas (sin marca de agua), se suelen usar APIs de terceros o scripts específicos que analizan el JSON de la respuesta de TikTok.
